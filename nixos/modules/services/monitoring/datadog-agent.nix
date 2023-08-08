@@ -253,6 +253,7 @@ in {
           rm -f /etc/datadog-agent/auth_token
         '';
         script = ''
+          export ASSUME_NO_MOVING_GC_UNSAFE_RISK_IT_WITH=go1.19
           export DD_API_KEY=$(head -n 1 ${cfg.apiKeyFile})
           exec ${datadogPkg}/bin/agent run -c /etc/datadog-agent/datadog.yaml
         '';
@@ -269,6 +270,7 @@ in {
         description = "Datadog Live Process Agent";
         path = [ ];
         script = ''
+          export ASSUME_NO_MOVING_GC_UNSAFE_RISK_IT_WITH=go1.19
           export DD_API_KEY=$(head -n 1 ${cfg.apiKeyFile})
           ${pkgs.datadog-process-agent}/bin/process-agent --config /etc/datadog-agent/datadog.yaml
         '';
@@ -278,6 +280,7 @@ in {
         description = "Datadog Trace Agent";
         path = [ ];
         script = ''
+          export ASSUME_NO_MOVING_GC_UNSAFE_RISK_IT_WITH=go1.19
           export DD_API_KEY=$(head -n 1 ${cfg.apiKeyFile})
           ${datadogPkg}/bin/trace-agent -config /etc/datadog-agent/datadog.yaml
         '';
