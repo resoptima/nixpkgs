@@ -50,6 +50,12 @@ let
         type = types.str;
       };
 
+      extraGroups = mkOption {
+        default = [ "keys" ];
+        description = lib.mdDoc "The groups the buildkite-agent user should belong to";
+        type = types.listOf types.str;
+      };
+
       runtimePackages = mkOption {
         default = [ pkgs.bash pkgs.gnutar pkgs.gzip pkgs.git pkgs.nix ];
         defaultText = literalExpression "[ pkgs.bash pkgs.gnutar pkgs.gzip pkgs.git pkgs.nix ]";
@@ -207,7 +213,7 @@ in
       home = cfg.dataDir;
       createHome = true;
       description = "Buildkite agent user";
-      extraGroups = [ "keys" ];
+      extraGroups = cfg.extraGroups;
       isSystemUser = true;
       group = "buildkite-agent-${name}";
     };
